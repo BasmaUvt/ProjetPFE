@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('checkout') {
+            steps {
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/BasmaUvt/TestCommit.git']])
+            }
+        }
+        
+        stage('run') {
+            steps {
+            //run the script python
+                bat 'python test2.py'
+            }
+        }
+        stage('Build') {
+            steps {
+                // Get code from a GitHub repository
+                git branch: 'dev', url: 'https://github.com/BasmaUvt/ProjetPFE'
+                 
+            }
+        }
+        
+        
+        //check out the test branch, run the test2.py script and pushe changes to the dev branch in the remote repository if the build is successful
+        stage('Test') {
+            steps {
+            
+                 git branch: 'test', url: 'https://github.com/BasmaUvt/ProjetPFE'
+                    bat 'python test2.py'
+                    }
+                    
+        //if the build is successful, the changes are pushed to the dev branch in the remote repository
+                    post {
+                        success {
+                    bat 'git push origin dev:main'
+                        }
+                    }
+                       }
+        
+        stage('Pull changes') {
+            steps {
+                bat 'git pull origin main'
+            }
+        }
+
+    }
+}
