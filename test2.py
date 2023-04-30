@@ -49,10 +49,10 @@ print(f"Nombre de pièces jointes dans le dossier 'ch': {count_attachments(test_
 count_emails = len(test_folder.Items)
 print(f"Nombre d'emails dans le dossier 'ch': {count_emails}")
 # Vérifier si le dossier "test" est présent
-#if "ch" in folders:
-#    test_folder = inbox.Folders("ch")
-#    print(f"Nombre de pièces jointes dans le dossier 'ch': {count_attachments(test_folder)}")
-#else:
-#    print("Le dossier 'ch' n'existe pas dans la boîte de réception.")
+if "ch" in folders:
+    test_folder = inbox.Folders("ch")
+print("Nombre de pièces jointes dans le dossier 'ch': {count_attachments(test_folder)}")
+else:
+   print("Le dossier 'ch' n'existe pas dans la boîte de réception.")
 
 
